@@ -23,8 +23,11 @@ npm install react-native-fbtee
 ```tsx
 import {Fbtee} from 'react-native-fbtee';
 
-const jsonStr: string | null = Fbtee.readLocalizationFile('localizable');
-const jsonObj = JSON.parse(jsonStr);
+// Read resource based on system language
+Fbtee.readLocalizationFile('localizable'); // string | null
+// Read resource based on specific language (if downloaded)
+Fbtee.readLocalizationFile('localizable', 'es');
+Fbtee.readLocalizationFile('localizable', 'pt', 'BR');
 ```
 
 ## License
