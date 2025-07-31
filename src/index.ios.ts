@@ -1,5 +1,5 @@
 export const Fbtee = {
-    readLocalizationFile(){
-        return null;
-    }
-} as const
+  readLocalizationFile() {
+    return null;
+  },
+} as const;
