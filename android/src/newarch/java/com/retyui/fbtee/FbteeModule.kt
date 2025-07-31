@@ -18,7 +18,7 @@ class FbteeModule(
     override fun getName() = NAME
 
     // Exported methods are overridden - based on the spec class
-    override fun readLocalizationFile(langCode: String?, country: String?) = moduleImpl.readLocalizationFile(langCode, country)
+    override fun readLocalizationFile(fileName: String, langCode: String?, countryCode: String?) = moduleImpl.readLocalizationFile(fileName, langCode, countryCode)
 
     companion object {
         const val NAME = FbteeModuleImpl.NAME

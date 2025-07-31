@@ -20,7 +20,7 @@ class FbteeModule(
     override fun getName() = NAME
 
     @ReactMethod(isBlockingSynchronousMethod = true)
-    fun readLocalizationFile(langCode: String?, country: String?) = moduleImpl.readLocalizationFile(langCode, country)
+    fun readLocalizationFile(fileName: String, langCode: String?, countryCode: String?) = moduleImpl.readLocalizationFile(fileName, langCode, countryCode)
 
     companion object {
         const val NAME = FbteeModuleImpl.NAME
