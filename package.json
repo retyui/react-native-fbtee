@@ -1,0 +1,61 @@
+{
+  "name": "react-native-fbtee",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/cjs",
+  "module": "dist/mjs",
+  "react-native": "src",
+  "source": "src",
+  "peerDependencies": {
+    "react": ">=16.4.0",
+    "react-native": ">=0.65.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "prebuild": "rm -fr dist",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+    "prepublishOnly": "yarn build"
+  },
+  "author": "David <4661784+retyui@users.noreply.github.com>",
+  "homepage": "https://github.com/retyui/react-native-fbtee#readme",
+  "bugs": "https://github.com/retyui/react-native-fbtee/issues",
+  "repository": "https://github.com/retyui/react-native-fbtee",
+  "files": [
+    "dist",
+    "src",
+    "android",
+    "!android/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "codegenConfig": {
+    "name": "Fbtee",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.retyui.fbtee"
+    }
+  },
+  "devDependencies": {
+    "react-native": "^0.80.2",
+    "typescript": "^5.9.2"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-native-component",
+    "android",
+    "android-widget",
+    "widget",
+    "home-screen",
+    "home-screen-widget"
+  ]
+}

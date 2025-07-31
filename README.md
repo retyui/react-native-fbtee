@@ -21,17 +21,10 @@ npm install react-native-fbtee
 ## Usage
 
 ```tsx
-import {WidgetPicker} from 'react-native-fbtee';
+import {Fbtee} from 'react-native-fbtee';
 
-WidgetPicker.isRequestPinAppWidgetSupported() // true or false
-
-// "MyAppWidget" - name from MainActivity.java or .kt
-WidgetPicker.requestPinAppWidget("MyAppWidget").then((value) => {
-    
-    if (value.message === "success") {
-        // success
-    }
-});
+const jsonStr: string | null = Fbtee.readLocalizationFile('localizable');
+const jsonObj = JSON.parse(jsonStr);
 ```
 
 ## License

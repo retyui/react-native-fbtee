@@ -1,0 +1,58 @@
+name: Build Android App
+
+on: [push]
+
+env:
+  RN_APP_NAME: MyApp
+
+jobs:
+  build_app:
+    strategy:
+      fail-fast: false
+      matrix:
+        new_arch_enabled: [1, 0]
+        rn_ver: [0.76-stable, 0.75-stable, 0.74-stable, 0.73-stable, 0.72-stable]
+
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Java 19
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 19
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build Tmp React Native App
+        env:
+          # enable new arch for iOS
+          RCT_NEW_ARCH_ENABLED: ${{ matrix.new_arch_enabled }}
+        run: |
+          cd /tmp
+
+          # Create new tmp React Native
+          npx @react-native-community/cli@latest init $RN_APP_NAME --version ${{ matrix.rn_ver }}
+          cd $RN_APP_NAME
+
+          # Install my module
+          yarn add file:${{ github.workspace }}
+
+          # Debug info
+          npx react-native info
+
+          # Enable new arch for Android
+          if [[ $RCT_NEW_ARCH_ENABLED == '1' ]]; then
+            sed -i 's/newArchEnabled=false/newArchEnabled=true/' android/gradle.properties
+          fi
+
+          # Build Android App
+          ./android/gradlew assembleRelease -p android -PreactNativeArchitectures=x86_64
