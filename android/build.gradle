@@ -44,6 +44,11 @@ android {
 
     if (supportsNamespace()) {
         namespace "com.retyui.fbtee"
+        sourceSets {
+            main {
+                manifest.srcFile "src/main/AndroidManifestNew.xml"
+            }
+        }
     }
 
     defaultConfig {
