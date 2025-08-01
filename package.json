@@ -1,6 +1,6 @@
 {
   "name": "react-native-fbtee",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "main": "dist/cjs",
   "module": "dist/mjs",
@@ -8,7 +8,7 @@
   "source": "src",
   "peerDependencies": {
     "react": ">=16.4.0",
-    "react-native": ">=0.65.0"
+    "react-native": ">=0.72.0"
   },
   "peerDependenciesMeta": {
     "react": {
