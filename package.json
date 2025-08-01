@@ -38,7 +38,7 @@
   ],
   "codegenConfig": {
     "name": "Fbtee",
-    "type": "all",
+    "type": "modules",
     "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.retyui.fbtee"
