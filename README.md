@@ -19,6 +19,8 @@ npm install react-native-fbtee
 
 ## Usage
 
+Please read the article, which provides [an example of its usage](https://dev.to/retyui/99-of-react-native-apps-make-this-localization-i18n-mistake-is-yours-one-of-them-2o6g).
+
 ```tsx
 import {Fbtee} from 'react-native-fbtee';
 
