@@ -1,17 +1,29 @@
 name: Build Android App
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+    paths: &build_paths
+      - 'android/**'
+      - 'src/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/build_android.yaml'
+  pull_request:
+    paths: *build_paths
 
-env:
-  RN_APP_NAME: MyApp
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build_app:
     strategy:
       fail-fast: false
       matrix:
-        new_arch_enabled: [1, 0]
-        rn_ver: [0.80.2, 0.79-stable, 0.78-stable, 0.77-stable, 0.76-stable, 0.75-stable, 0.74-stable, 0.73-stable]
+        new_arch_enabled: [1]
+        rn_ver: [latest]
 
     runs-on: ubuntu-24.04
 
@@ -21,41 +33,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Java 19
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 19
-
-      - name: Setup Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
       - name: Build Tmp React Native App
-        env:
-          # enable new arch for iOS
-          RCT_NEW_ARCH_ENABLED: ${{ matrix.new_arch_enabled }}
-        run: |
-          cd /tmp
-
-          # Create new tmp React Native
-          npx @react-native-community/cli@latest init $RN_APP_NAME --version ${{ matrix.rn_ver }}
-          cd $RN_APP_NAME
-
-          # Install my module
-          yarn add file:${{ github.workspace }}
-
-          # Debug info
-          npx react-native info
-
-          # Enable new arch for Android
-          if [[ $RCT_NEW_ARCH_ENABLED == '1' ]]; then
-            sed -i 's/newArchEnabled=false/newArchEnabled=true/' android/gradle.properties
-          ./android/gradlew generateCodegenArtifactsFromSchema -p android
-          else
-            sed -i 's/newArchEnabled=true/newArchEnabled=false/' android/gradle.properties
-          fi
-
-          # Build Android App
-          ./android/gradlew assembleRelease -p android -PreactNativeArchitectures=x86_64
+        uses: retyui/oss-react-native-build/build-app@v1
+        with:
+          platform: android
+          rn-ver: ${{ matrix.rn_ver }}
+          new-arch-enabled: ${{ matrix.new_arch_enabled }}
+          android-arch: x86_64
