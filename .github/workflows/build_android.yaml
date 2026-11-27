@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 1
 
       - name: Build Tmp React Native App
-        uses: retyui/oss-react-native-build/build-app@v1
+        uses: retyui/oss-react-native-build/build-app@v0
         with:
           platform: android
           rn-ver: ${{ matrix.rn_ver }}
