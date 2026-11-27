@@ -31,12 +31,13 @@ jobs:
 
       - name: Create release PR or publish to npm
         id: changesets
-        uses: changesets/action@v2
+        uses: changesets/action@v1 # v2 requires @changesets/cli v3
         with:
-          version-script: yarn version-packages # changeset version && yarn install
-          publish-script: yarn release # changeset publish (build runs via prepublishOnly)
-          commit-message: "chore: version packages"
-          pr-title: "chore: version packages"
-          create-github-releases: true
+          version: yarn version-packages # changeset version && yarn install
+          publish: yarn release # changeset publish (build runs via prepublishOnly)
+          commit: "chore: version packages"
+          title: "chore: version packages"
+          createGithubReleases: true
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: "true"
